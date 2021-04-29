@@ -6,55 +6,55 @@
 
 using namespace Rcpp;
 
-// rcpparma_hello_world
-arma::mat rcpparma_hello_world();
-RcppExport SEXP _cloudfil_rcpparma_hello_world() {
+// fill_image
+arma::mat fill_image(arma::mat ref, arma::mat cld, int w, int nrow, int ncol);
+RcppExport SEXP _cloudfil_fill_image(SEXP refSEXP, SEXP cldSEXP, SEXP wSEXP, SEXP nrowSEXP, SEXP ncolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpparma_hello_world());
+    Rcpp::traits::input_parameter< arma::mat >::type ref(refSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type cld(cldSEXP);
+    Rcpp::traits::input_parameter< int >::type w(wSEXP);
+    Rcpp::traits::input_parameter< int >::type nrow(nrowSEXP);
+    Rcpp::traits::input_parameter< int >::type ncol(ncolSEXP);
+    rcpp_result_gen = Rcpp::wrap(fill_image(ref, cld, w, nrow, ncol));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpparma_outerproduct
-arma::mat rcpparma_outerproduct(const arma::colvec& x);
-RcppExport SEXP _cloudfil_rcpparma_outerproduct(SEXP xSEXP) {
+// get_dist
+arma::vec get_dist(arma::uvec ngbs, int i, int w, int nrow, int ncol);
+RcppExport SEXP _cloudfil_get_dist(SEXP ngbsSEXP, SEXP iSEXP, SEXP wSEXP, SEXP nrowSEXP, SEXP ncolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_outerproduct(x));
+    Rcpp::traits::input_parameter< arma::uvec >::type ngbs(ngbsSEXP);
+    Rcpp::traits::input_parameter< int >::type i(iSEXP);
+    Rcpp::traits::input_parameter< int >::type w(wSEXP);
+    Rcpp::traits::input_parameter< int >::type nrow(nrowSEXP);
+    Rcpp::traits::input_parameter< int >::type ncol(ncolSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_dist(ngbs, i, w, nrow, ncol));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpparma_innerproduct
-double rcpparma_innerproduct(const arma::colvec& x);
-RcppExport SEXP _cloudfil_rcpparma_innerproduct(SEXP xSEXP) {
+// get_ngbs
+arma::uvec get_ngbs(int i, int w, int nrow, int ncol);
+RcppExport SEXP _cloudfil_get_ngbs(SEXP iSEXP, SEXP wSEXP, SEXP nrowSEXP, SEXP ncolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_innerproduct(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_bothproducts
-Rcpp::List rcpparma_bothproducts(const arma::colvec& x);
-RcppExport SEXP _cloudfil_rcpparma_bothproducts(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_bothproducts(x));
+    Rcpp::traits::input_parameter< int >::type i(iSEXP);
+    Rcpp::traits::input_parameter< int >::type w(wSEXP);
+    Rcpp::traits::input_parameter< int >::type nrow(nrowSEXP);
+    Rcpp::traits::input_parameter< int >::type ncol(ncolSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_ngbs(i, w, nrow, ncol));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_cloudfil_rcpparma_hello_world", (DL_FUNC) &_cloudfil_rcpparma_hello_world, 0},
-    {"_cloudfil_rcpparma_outerproduct", (DL_FUNC) &_cloudfil_rcpparma_outerproduct, 1},
-    {"_cloudfil_rcpparma_innerproduct", (DL_FUNC) &_cloudfil_rcpparma_innerproduct, 1},
-    {"_cloudfil_rcpparma_bothproducts", (DL_FUNC) &_cloudfil_rcpparma_bothproducts, 1},
+    {"_cloudfil_fill_image", (DL_FUNC) &_cloudfil_fill_image, 5},
+    {"_cloudfil_get_dist", (DL_FUNC) &_cloudfil_get_dist, 5},
+    {"_cloudfil_get_ngbs", (DL_FUNC) &_cloudfil_get_ngbs, 4},
     {NULL, NULL, 0}
 };
 
