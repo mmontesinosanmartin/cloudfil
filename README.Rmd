@@ -1,19 +1,29 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 # cloudfil
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of `cloudfil` is to fill the gaps in satellite images caused by
-clouds.
+The goal of `cloudfil` is to fill the gaps in satellite images caused by clouds.
 
 # Installation
 
 The package can be installed from Github as follows:
 
-``` r
+```{r eval=FALSE}
 library("devtools")
 install_github("mmontesinosanmartin/cloudfil")
 ```
+
