@@ -41,14 +41,15 @@ plotRGB(cld.img, stretch = "lin")
 Apply the `fill_stack()` function to fill the `cld.img` based on the `clr.img`. Define a neighborhood of size (2w+1)x(2w+1) around every missing pixel. The information in the neighboring area is used to fill the missing value.
 
 ```{r filling}
-fill.img <- fill_stack(clr.img, cld.img, w = 10)
-plotRGB(fill.img, stretch = "lin")
+fill.img <- fill_stack(clr.img, cld.img, w = 100)
+plotRGB(fill.img$img, stretch = "lin")
 ```
 
 Let's test the prediction against the actual image:
 
 ```{r evaluating}
 data("trg.img")
-eval_rmse(fill.img, trg.img)
+eval_rmse(fill.img$img, trg.img)
+plot(fill.img$flag)
 ```
 

@@ -43,8 +43,8 @@ missing pixel. The information in the neighboring area is used to fill
 the missing value.
 
 ``` r
-fill.img <- fill_stack(clr.img, cld.img, w = 10)
-plotRGB(fill.img, stretch = "lin")
+fill.img <- fill_stack(clr.img, cld.img, w = 100)
+plotRGB(fill.img$img, stretch = "lin")
 ```
 
 ![](README_files/figure-gfm/filling-1.png)<!-- -->
@@ -53,7 +53,10 @@ Let’s test the prediction against the actual image:
 
 ``` r
 data("trg.img")
-eval_rmse(fill.img, trg.img)
+eval_rmse(fill.img$img, trg.img)
 #>            [,1]
-#> [1,] 0.01727819
+#> [1,] 0.01494431
+plot(fill.img$flag)
 ```
+
+![](README_files/figure-gfm/evaluating-1.png)<!-- -->

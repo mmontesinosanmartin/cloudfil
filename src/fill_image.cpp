@@ -43,6 +43,7 @@ arma::mat fill_image(arma::mat ref,
                      int ncol){
   // initialize output
   arma::mat out = cld;
+  arma::vec tpe(cld.n_rows);
   // cloudy/clear px: clouds affect all bands equally
   arma::uvec cldpx = arma::find_nonfinite(cld.col(0));
   // for each cloudy pixel
@@ -57,22 +58,24 @@ arma::mat fill_image(arma::mat ref,
     arma::mat cldclr = cld.rows(ngbclr);
     arma::mat refclr = ref.rows(ngbclr);
     // spatio-spectral similarity
-    // arma::vec dssim = 1 / get_dist(ngbclr, i, w, nrow, ncol);
+    arma::vec dssim = 1 / get_dist(ngbclr, i, w, nrow, ncol);
     arma::vec spsim = 1 / sqrt(sum(square(refclr.each_row() - ref.row(i)), 1));
     // spatio-spectral weights
     arma::vec spwgt = spsim / sum(spsim);
-    // arma::vec dswgt = dssim / sum(dssim);
-    arma::vec simis = spwgt; //% dssim;
+    arma::vec dswgt = dssim / sum(dssim);
+    arma::vec simis = spwgt % dssim;
     // predictors
     arma::mat deltat = cldclr - refclr;
     arma::mat deltas = cldclr;
-    // prediction
+    // weights
     double w1 = (double) ngbclr.n_elem / (double) pow((2 * w + 1), 2);
     double w2 = 1. - w1;
+    // predictions
     arma::rowvec shat = sum(deltas.each_col() % simis, 0);
     arma::rowvec that = sum(deltat.each_col() % simis, 0)+ ref.row(i);
     out.row(i) = (w1 * shat) + (w2 * that);
+    tpe(i) = w1;
   }
   // return filled
-  return out;
+  return join_rows(out, tpe);
 }
