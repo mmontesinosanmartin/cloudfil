@@ -27,3 +27,20 @@ library("devtools")
 install_github("mmontesinosanmartin/cloudfil")
 ```
 
+# Example
+
+This is a basic example that shows how to fill the gaps from a satellite image left by clouds. In addition to the cloudy image, the algorithm requires a clear-sky image. This clear-sky image works as a reference.
+
+```{r dataset}
+library(cloudfil)
+data("clr.img")
+data("cld.img")
+plotRGB(cld.img, stretch = "lin")
+```
+
+
+```{r fill}
+fill.img <- fill_stack(clr.img, cld.img, w = 10)
+plotRGB(fill.img, stretch = "lin")
+```
+
