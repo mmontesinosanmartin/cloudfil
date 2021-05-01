@@ -6,6 +6,19 @@
 
 using namespace Rcpp;
 
+// cpp_rmse
+arma::rowvec cpp_rmse(arma::mat& x, arma::mat& y, bool byband);
+RcppExport SEXP _cloudfil_cpp_rmse(SEXP xSEXP, SEXP ySEXP, SEXP bybandSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::mat& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< bool >::type byband(bybandSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_rmse(x, y, byband));
+    return rcpp_result_gen;
+END_RCPP
+}
 // fill_image
 arma::mat fill_image(arma::mat ref, arma::mat cld, int w, int nrow, int ncol);
 RcppExport SEXP _cloudfil_fill_image(SEXP refSEXP, SEXP cldSEXP, SEXP wSEXP, SEXP nrowSEXP, SEXP ncolSEXP) {
@@ -36,6 +49,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// get_edge
+arma::uvec get_edge(int i, int w, int ncols, int nrows);
+RcppExport SEXP _cloudfil_get_edge(SEXP iSEXP, SEXP wSEXP, SEXP ncolsSEXP, SEXP nrowsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type i(iSEXP);
+    Rcpp::traits::input_parameter< int >::type w(wSEXP);
+    Rcpp::traits::input_parameter< int >::type ncols(ncolsSEXP);
+    Rcpp::traits::input_parameter< int >::type nrows(nrowsSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_edge(i, w, ncols, nrows));
+    return rcpp_result_gen;
+END_RCPP
+}
 // get_ngbs
 arma::uvec get_ngbs(int i, int w, int nrow, int ncol);
 RcppExport SEXP _cloudfil_get_ngbs(SEXP iSEXP, SEXP wSEXP, SEXP nrowSEXP, SEXP ncolSEXP) {
@@ -52,8 +79,10 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_cloudfil_cpp_rmse", (DL_FUNC) &_cloudfil_cpp_rmse, 3},
     {"_cloudfil_fill_image", (DL_FUNC) &_cloudfil_fill_image, 5},
     {"_cloudfil_get_dist", (DL_FUNC) &_cloudfil_get_dist, 5},
+    {"_cloudfil_get_edge", (DL_FUNC) &_cloudfil_get_edge, 4},
     {"_cloudfil_get_ngbs", (DL_FUNC) &_cloudfil_get_ngbs, 4},
     {NULL, NULL, 0}
 };

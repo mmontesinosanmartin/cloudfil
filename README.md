@@ -20,9 +20,9 @@ install_github("mmontesinosanmartin/cloudfil")
 
 # Example
 
-This is a basic example that shows how to fill the gaps from a satellite
-image left by clouds. In addition to the cloudy image, the algorithm
-requires a clear-sky image. This clear-sky image works as a reference.
+This is an example on how to fill gaps in satellite images left by
+clouds. The technique requires the cloudy image and a clear-sky image
+from the same location on another date.
 
 ``` r
 library(cloudfil)
@@ -37,9 +37,23 @@ plotRGB(cld.img, stretch = "lin")
 
 ![](README_files/figure-gfm/dataset-1.png)<!-- -->
 
+Apply the `fill_stack()` function to fill the `cld.img` based on the
+`clr.img`. Define a neighborhood of size (2w+1)x(2w+1) around every
+missing pixel. The information in the neighboring area is used to fill
+the missing value.
+
 ``` r
 fill.img <- fill_stack(clr.img, cld.img, w = 10)
 plotRGB(fill.img, stretch = "lin")
 ```
 
-![](README_files/figure-gfm/fill-1.png)<!-- -->
+![](README_files/figure-gfm/filling-1.png)<!-- -->
+
+Let’s test the prediction against the actual image:
+
+``` r
+data("trg.img")
+eval_rmse(fill.img, trg.img)
+#>            [,1]
+#> [1,] 0.01727819
+```
